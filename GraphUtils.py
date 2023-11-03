@@ -19,7 +19,7 @@ def importGraph(filename = './data/trivial.txt', isNetworkXGraph=True):
                     result[fromNode].append(toNode)
                 else:
                     result[fromNode]=[toNode]
-    print(f'\nLoaded a graph:\n{graph}')
+    print(f'\nLoaded a graph:\n{result}')
     return result
 
 # draw a networkx graph:

@@ -8,9 +8,10 @@ def displayTable(pairs, type=''):
 
 # display HITS hub and auth scores :
 def displayScores(auth, hubs):
-    print("\nTop 10 Authority Scores:\n")
+    print(f'HITS Scores:')
+    print("\nTop 10 Authority Scores\n")
     displayTable(auth_sorted[:10], 'Authority')
-    print("\nTop 10 Hub Scores:\n")
+    print("\nTop 10 Hub Scores\n")
     displayTable(hub_sorted[:10], 'Hub')
 
 # graph = import_graph('data/Cit-HepTh.txt')
