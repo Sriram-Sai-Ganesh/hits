@@ -1,29 +1,24 @@
 import networkx as nx
-import matplotlib.pyplot as plt
+import GraphUtils
 
-def import_graph(filename = './data/graph.txt', isNetworkXGraph=True):
-    result = nx.DiGraph() if isNetworkXGraph else dict()
-    with open(filename) as file:
-        for line in file:
-            nodes=line.strip().split()
-            if len(nodes) < 1:
-                    continue
-            print(f'{nodes[0]} is adjacent to all {nodes[1:]}')
-            start=nodes[0]
-            if isNetworkXGraph:
-                for neighbor in nodes[1:]:
-                    result.add_edge(start, neighbor)
-            else:
-                result[start]=nodes[1:]
-    return result
+# display scores as a table:
+def displayTable(pairs, type=''):
+    print(f'Node\t│ {type} Score')
+    print('\n'.join([f'{x}\t│ {y:.3e}' for x,y in pairs]))
 
-graph = import_graph()
-print(f'\nLoaded a graph:\n{graph}')
-nx.draw(graph, with_labels=True)
-plt.show()
+# display HITS hub and auth scores :
+def displayScores(auth, hubs):
+    print("\nTop 10 Authority Scores:\n")
+    displayTable(auth_sorted[:10], 'Authority')
+    print("\nTop 10 Hub Scores:\n")
+    displayTable(hub_sorted[:10], 'Hub')
+
+# graph = import_graph('data/Cit-HepTh.txt')
+graph = GraphUtils.importGraph()
+GraphUtils.drawGraph(graph)
 
 authority_scores, hub_scores = nx.hits(graph)
-print("\nAuthority Scores:")
-print('\n'.join(list(map(str, authority_scores.items()))))
-print("Hub Scores:")
-print('\n'.join(list(map(str, hub_scores.items()))))
+auth_sorted = sorted(authority_scores.items(), key=lambda x:x[1], reverse=True)
+hub_sorted = sorted(authority_scores.items(), key=lambda x:x[1], reverse=True)
+
+displayScores(auth_sorted, hub_sorted)
