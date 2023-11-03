@@ -1,5 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+from matplotlib import pylab
 
 
 # data in the file is a list of adjacency pairs forming a directed graph.
@@ -26,3 +27,25 @@ def importGraph(filename = './data/trivial.txt', isNetworkXGraph=True):
 def drawGraph(graph):
     nx.draw(graph, with_labels=True)
     plt.show()
+
+
+def save_graph(graph,file_name='out/graph.pdf'):
+    #initialize fig
+    plt.figure(num=None, figsize=(20, 20), dpi=8)
+    plt.axis('off')
+    fig = plt.figure(1)
+    # pos = nx.spring_layout(graph)
+    pos = nx.circular_layout(graph)
+    nx.draw_networkx_nodes(graph,pos)
+    nx.draw_networkx_edges(graph,pos)
+    nx.draw_networkx_labels(graph,pos)
+
+    cut = 1.2
+    xmax = cut * max(xx for xx, _ in pos.values())
+    ymax = cut * max(yy for _, yy in pos.values())
+    plt.xlim(-xmax, xmax)
+    plt.ylim(-ymax, ymax)
+
+    plt.savefig(file_name,bbox_inches="tight")
+    pylab.close()
+    del fig

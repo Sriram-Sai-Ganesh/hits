@@ -14,8 +14,9 @@ def displayScores(auth, hubs):
     print("\nTop 10 Hub Scores\n")
     displayTable(hub_sorted[:10], 'Hub')
 
-# graph = import_graph('data/Cit-HepTh.txt')
+# graph = GraphUtils.importGraph('data/Cit-HepTh.txt')
 graph = GraphUtils.importGraph()
+GraphUtils.save_graph(graph)
 GraphUtils.drawGraph(graph)
 
 authority_scores, hub_scores = nx.hits(graph)
